@@ -187,7 +187,7 @@ crossorigin=""/>
 <p><em>Kristoffer Carlsson</em></p>
 <h1 id="precompile_file_relocatability"><a href="#precompile_file_relocatability" class="header-anchor">Precompile file relocatability</a></h1>
 <p><em>Florian Atteneder</em></p>
-<p>Enabling relocation of cache files, together with other improvements coming in v1.11, paves the way for Pkg.jl to serve cache files in the future.</p>
+<p>Enabling relocation of cache files, together with other improvements coming in v1.11, will help Pkg.jl to serve cache files in the future.</p>
 <p>To automatically enable relocatability follow <a href="https://pkgdocs.julialang.org/v1/creating-packages/#Best-Practices">Pkg.jl&#39;s Best Practices</a>, i.e. do not assume that your package code ends up in a writeable or stable location. Instead, utilize existing tools like Artifacts.jl, Scratch.jl or Preferences.jl to make your package self-contained, immutable and relocatable.</p>
 <p>Usage of non-relocatable packages continues to work as before. Attempting to relocate such a package should only occur re-precompilation overhead.</p>
 <p>Pitfalls for relocation:</p>
