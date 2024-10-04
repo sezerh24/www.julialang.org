@@ -184,6 +184,7 @@ crossorigin=""/>
 
   Returns <span class="hljs-literal">true</span> <span class="hljs-keyword">if</span> the current task is running a finalizer, returns <span class="hljs-literal">false</span> otherwise. Will also <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> within a finalizer which was inlined by the compiler&#x27;s eager finalization optimization, or <span class="hljs-keyword">if</span> finalize is called on the finalizer
   directly.</code></pre>
+<p>This new feature was presented at JuliaCon and can be seen <a href="https://www.youtube.com/watch?v&#61;2o8MhoN-3NE">here</a></p>
 <h1 id="manifest_versioning"><a href="#manifest_versioning" class="header-anchor">Manifest versioning</a></h1>
 <p><em>Ian Butterworth</em></p>
 <p><code>Manifest.toml</code> files can now be renamed in the format <code>Manifest-v&#123;major&#125;.&#123;minor&#125;.toml</code> to be preferentially picked up by the given julia version. i.e. in the same folder, a <code>Manifest-v1.11.toml</code> would be used by v1.11 and <code>Manifest.toml</code> by every other julia version. This makes managing environments for multiple julia versions at the same time easier. To create such a manifest it is recommended rename an already generated manifest, rather than start with an empty file.</p>
@@ -214,10 +215,6 @@ crossorigin=""/>
 </li>
 </ul>
 <p>In general, avoid absolute paths or relative paths outside the package&#39;s root directory.</p>
-<ul>
-<li><p>Anything else?</p>
-</li>
-</ul>
 <h1 id="stdlib_excision"><a href="#stdlib_excision" class="header-anchor">Stdlib excision</a></h1>
 <p><em>Valentin Churavy</em>, <em>Kristoffer Carlsson</em></p>
 <p>After the introduction of package-images for native caching in Julia 1.10, we started the process of moving standard libraries out of the system-image. This produces a smaller Julia system-image and startup for small scripts being faster.</p>
