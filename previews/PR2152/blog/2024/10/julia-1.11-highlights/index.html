@@ -182,7 +182,7 @@ crossorigin=""/>
 
   GC.in_finalizer()::<span class="hljs-built_in">Bool</span>
 
-  Returns <span class="hljs-literal">true</span> <span class="hljs-keyword">if</span> the current task is running a finalizer, returns <span class="hljs-literal">false</span> otherwise. Will also <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> within a finalizer which was inlined by the compiler&#x27;s eager finalization optimization, or <span class="hljs-keyword">if</span> finalize is called on the finalizer       
+  Returns <span class="hljs-literal">true</span> <span class="hljs-keyword">if</span> the current task is running a finalizer, returns <span class="hljs-literal">false</span> otherwise. Will also <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> within a finalizer which was inlined by the compiler&#x27;s eager finalization optimization, or <span class="hljs-keyword">if</span> finalize is called on the finalizer
   directly.</code></pre>
 <h1 id="manifest_versioning"><a href="#manifest_versioning" class="header-anchor">Manifest versioning</a></h1>
 <p><em>Ian Butterworth</em></p>
@@ -201,7 +201,7 @@ crossorigin=""/>
 <p><em>Kristoffer Carlsson</em></p>
 <p>Previously to be able to instantiate an environment that used unregistered dependencies it was required that the manifest file was available since that file gave the information of e.g. what URL the unregistered dependencies are available. Now this information can be specified in the Project file, for example:</p>
 <pre><code class="toml hljs"><span class="hljs-section">[sources]</span>
-<span class="hljs-attr">MyUnregisterdPackage</span> = {url = <span class="hljs-string">&quot;https://github.com/JuliaLang/MyUnregisteredPacakge.jl&quot;</span>}</code></pre>
+<span class="hljs-attr">MyUnregisteredPacakge</span> = {url = <span class="hljs-string">&quot;https://github.com/JuliaLang/MyUnregisteredPacakge.jl&quot;</span>}</code></pre>
 <p>This feature was also shown at JuliaCon and can be seen <a href="https://youtu.be/7n27lF_SrxY?t&#61;19">here</a>.</p>
 <h1 id="precompile_file_relocatability"><a href="#precompile_file_relocatability" class="header-anchor">Precompile file relocatability</a></h1>
 <p><em>Florian Atteneder</em></p>
@@ -229,7 +229,7 @@ Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1
 Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1.11</span> --startup-file=no -e <span class="hljs-string">&quot;1+1&quot;</span>
   Time (mean ± σ):      <span class="hljs-number">91.9</span> ms ±   <span class="hljs-number">3.0</span> ms    [User: <span class="hljs-number">72.5</span> ms, System: <span class="hljs-number">19.1</span> ms]
   Range (min … max):    <span class="hljs-number">88.7</span> ms … <span class="hljs-number">100.8</span> ms    <span class="hljs-number">29</span> runs</code></pre>
-<p>Excising standard libaries also intrododuces the opportunity in the future to update standard libraries independently of Julia. Consequently since this release standard libraries will have their own version numbers. Our goal is to make the development of standard libaries faster and lower the barrier of entry for contributions.</p>
+<p>Excising standard libraries also intrododuces the opportunity in the future to update standard libraries independently of Julia. Consequently since this release standard libraries will have their own version numbers. Our goal is to make the development of standard libraries faster and lower the barrier of entry for contributions.</p>
 <h1 id="scopedvalues"><a href="#scopedvalues" class="header-anchor">ScopedValues</a></h1>
 <p>ScopedValues are a new runtime supported datatype that provides an alternative to globals for configuration parameters.</p>
 <p>The example below uses ScopedValues to implement permission checking in a web application. When a request is initially processed the permission level needs to be checked only once and all subsequent processing of the request will <em>dynamically</em> inherit the state of the ScopedValue. Dynamically means that the state of ScopedValues is propagated to child functions and child tasks.</p>
