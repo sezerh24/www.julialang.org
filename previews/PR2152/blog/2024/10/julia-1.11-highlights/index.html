@@ -219,8 +219,8 @@ crossorigin=""/>
 </li>
 </ul>
 <h1 id="stdlib_excision"><a href="#stdlib_excision" class="header-anchor">Stdlib excision</a></h1>
-<p>&#40;Ian adding this but probably Valentin?&#41;</p>
-<p>Most stdlibs have now been extracted into their own pkgimages, resulting in the core julia sysimage being smaller and core startup time being faster.</p>
+<p><em>Valentin Churavy</em>, <em>Kristoffer Carlsson</em></p>
+<p>After the introduction of package-images for native caching in Julia 1.10, we started the process of moving standard libraries out of the system-image. This produces a smaller Julia system-image and startup for small scripts being faster.</p>
 <pre><code class="julia hljs">% hyperfine &#x27;julia +<span class="hljs-number">1.10</span> --startup-file=no -e <span class="hljs-string">&quot;1+1&quot;</span>&#x27;
 Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1.10</span> --startup-file=no -e <span class="hljs-string">&quot;1+1&quot;</span>
   Time (mean ± σ):     <span class="hljs-number">113.2</span> ms ±   <span class="hljs-number">2.8</span> ms    [User: <span class="hljs-number">108.9</span> ms, System: <span class="hljs-number">25.9</span> ms]
@@ -229,7 +229,34 @@ Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1
 Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1.11</span> --startup-file=no -e <span class="hljs-string">&quot;1+1&quot;</span>
   Time (mean ± σ):      <span class="hljs-number">91.9</span> ms ±   <span class="hljs-number">3.0</span> ms    [User: <span class="hljs-number">72.5</span> ms, System: <span class="hljs-number">19.1</span> ms]
   Range (min … max):    <span class="hljs-number">88.7</span> ms … <span class="hljs-number">100.8</span> ms    <span class="hljs-number">29</span> runs</code></pre>
-<p>Excising stdlibs also is a step in the direction of allowing stdlibs to be updated independently of julia version, meaning hotfixes etc. do not need to wait for julia releases.</p>
+<p>Excising standard libaries also intrododuces the opportunity in the future to update standard libraries independently of Julia. Consequently since this release standard libraries will have their own version numbers. Our goal is to make the development of standard libaries faster and lower the barrier of entry for contributions.</p>
+<h1 id="scopedvalues"><a href="#scopedvalues" class="header-anchor">ScopedValues</a></h1>
+<p>ScopedValues are a new runtime supported datatype that provides an alternative to globals for configuration parameters.</p>
+<p>The example below uses ScopedValues to implement permission checking in a web application. When a request is initially processed the permission level needs to be checked only once and all subsequent processing of the request will <em>dynamically</em> inherit the state of the ScopedValue. Dynamically means that the state of ScopedValues is propagated to child functions and child tasks.</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> Base.ScopedValues
+
+<span class="hljs-keyword">const</span> LEVEL = ScopedValue(:GUEST)
+
+<span class="hljs-keyword">function</span> serve(request, response)
+    level = isAdmin(request) ? :ADMIN : :GUEST
+    with(LEVEL =&gt; level) <span class="hljs-keyword">do</span>
+        Threads.<span class="hljs-meta">@spawn</span> handle(request, response)
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">function</span> open(connection::Database)
+    level = LEVEL[]
+    <span class="hljs-keyword">if</span> level !== :ADMIN
+        error(<span class="hljs-string">&quot;Access disallowed&quot;</span>)
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-comment"># ... open connection</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">function</span> handle(request, response)
+    <span class="hljs-comment"># ...</span>
+    open(Database(<span class="hljs-comment">#=...=#</span>))
+    <span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span></code></pre>
 <h1 id="new_main_entry_point"><a href="#new_main_entry_point" class="header-anchor">New main entry point</a></h1>
 <p><em>Keno</em></p>
 <p>The entry point for Julia has been standardized to <code>Main.main&#40;args&#41;</code>. This must be explicitly opted into using the <code>@main</code> macro &#40;see the docstring for further details&#41;. When opted-in, and <code>julia</code> is invoked to run a script or expression &#40;i.e. using <code>julia script.jl</code> or <code>julia -e expr</code>&#41;, <code>julia</code> will subsequently run the <code>Main.main</code> function automatically. This is intended to unify script and compilation workflows, where code loading may happen in the compiler and execution of <code>Main.main</code> may happen in the resulting executable. For interactive use, there is no semantic difference between defining a <code>main</code> function and executing the code directly at the end of the script.</p>
