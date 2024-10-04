@@ -186,7 +186,7 @@ crossorigin=""/>
   directly.</code></pre>
 <h1 id="manifest_versioning"><a href="#manifest_versioning" class="header-anchor">Manifest versioning</a></h1>
 <p><em>Ian Butterworth</em></p>
-<p><code>Manifest.toml</code> files can now be renamed in the format <code>Manifest-v&#123;major&#125;.&#123;minor&#125;.toml</code> to be preferentially picked up by the given julia version. i.e. in the same folder, a <code>Manifest-v1.11.toml</code> would be used by v1.11 and <code>Manifest.toml</code> by every other julia version. This makes managing environments for multiple julia versions at the same time easier.</p>
+<p><code>Manifest.toml</code> files can now be renamed in the format <code>Manifest-v&#123;major&#125;.&#123;minor&#125;.toml</code> to be preferentially picked up by the given julia version. i.e. in the same folder, a <code>Manifest-v1.11.toml</code> would be used by v1.11 and <code>Manifest.toml</code> by every other julia version. This makes managing environments for multiple julia versions at the same time easier. To create such a manifest it is recommended rename an already generated manifest, rather than start with an empty file.</p>
 <h1 id="improved_tab_completion_and_hinting_in_the_repl"><a href="#improved_tab_completion_and_hinting_in_the_repl" class="header-anchor">Improved tab completion and hinting in the REPL</a></h1>
 <p><em>Ian Butterworth</em>, <em>Shuhei Kadowaki</em></p>
 <p>Tab completion has become more powerful in 1.11 and gained inline hinting when there is a singular completion available that can be completed with tab.</p>
@@ -261,9 +261,13 @@ Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1
 <p><em>Keno</em></p>
 <p>The entry point for Julia has been standardized to <code>Main.main&#40;args&#41;</code>. This must be explicitly opted into using the <code>@main</code> macro &#40;see the docstring for further details&#41;. When opted-in, and <code>julia</code> is invoked to run a script or expression &#40;i.e. using <code>julia script.jl</code> or <code>julia -e expr</code>&#41;, <code>julia</code> will subsequently run the <code>Main.main</code> function automatically. This is intended to unify script and compilation workflows, where code loading may happen in the compiler and execution of <code>Main.main</code> may happen in the resulting executable. For interactive use, there is no semantic difference between defining a <code>main</code> function and executing the code directly at the end of the script.</p>
 <h1 id="the_time_macro_now_reports_lock_conflicts"><a href="#the_time_macro_now_reports_lock_conflicts" class="header-anchor">The <code>@time</code> macro now reports lock conflicts</a></h1>
-<p><em>Ian</em></p>
-<p>&#40;too niche?&#41;</p>
-<pre><code class="julia hljs">julia&gt; <span class="hljs-keyword">function</span> foo()
+<p><em>Ian Butterworth</em></p>
+<p>The <code>@time</code> macro will now report any lock contention within the call being timed, as a number of lock conflicts. A lock conflict is where a task attempted to lock a <code>ReentrantLock</code> that is already locked, and may indicate design issues that could be impeding concurrent performance.</p>
+<p>In this example the number of conflicts is clearly expected, but locks could be burried deep in library code, making them hard to catch otherwise.</p>
+<pre><code class="julia hljs">julia&gt; Threads.nthreads()
+<span class="hljs-number">6</span>
+
+julia&gt; <span class="hljs-keyword">function</span> foo()
           l = <span class="hljs-built_in">ReentrantLock</span>()
           Threads.<span class="hljs-meta">@threads</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:Threads.nthreads()
               lock(l) <span class="hljs-keyword">do</span>
