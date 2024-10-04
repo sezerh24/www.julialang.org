@@ -263,7 +263,7 @@ Benchmark <span class="hljs-number">1</span>: julia +<span class="hljs-number">1
 <h1 id="the_time_macro_now_reports_lock_conflicts"><a href="#the_time_macro_now_reports_lock_conflicts" class="header-anchor">The <code>@time</code> macro now reports lock conflicts</a></h1>
 <p><em>Ian Butterworth</em></p>
 <p>The <code>@time</code> macro will now report any lock contention within the call being timed, as a number of lock conflicts. A lock conflict is where a task attempted to lock a <code>ReentrantLock</code> that is already locked, and may indicate design issues that could be impeding concurrent performance.</p>
-<p>In this example the number of conflicts is clearly expected, but locks could be burried deep in library code, making them hard to catch otherwise.</p>
+<p>In this example the number of conflicts is clearly expected, but locks could be buried deep in library code, making them hard to catch otherwise.</p>
 <pre><code class="julia hljs">julia&gt; Threads.nthreads()
 <span class="hljs-number">6</span>
 
