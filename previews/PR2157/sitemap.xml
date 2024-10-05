@@ -62,12 +62,6 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://julialang.netlify.app/previews/PR2157/blog/2024/10/julia-1.11-highlights/index.html</loc>
-    <lastmod>2024-10-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
     <loc>https://julialang.netlify.app/previews/PR2157/blog/2021/08/juliacon-highlights/index.html</loc>
     <lastmod>2024-10-05</lastmod>
     <changefreq>monthly</changefreq>
