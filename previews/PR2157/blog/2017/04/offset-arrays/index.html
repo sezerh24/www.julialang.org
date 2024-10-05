@@ -257,7 +257,7 @@ julia&gt; B2[<span class="hljs-number">1</span>,<span class="hljs-number">1</spa
 <p>To maintain consistent &quot;naming&quot; of our indices, let&#39;s use the <a href="https://github.com/alsam/OffsetArrays.jl">OffsetArrays</a> package:</p>
 <pre><code class="julia hljs">julia&gt; <span class="hljs-keyword">using</span> OffsetArrays
 
-julia&gt; B3 = OffsetArray(A[<span class="hljs-number">2</span>:<span class="hljs-number">4</span>, <span class="hljs-number">1</span>:<span class="hljs-number">4</span>], <span class="hljs-number">2</span>:<span class="hljs-number">4</span>, <span class="hljs-number">1</span>:<span class="hljs-number">4</span>)  
+julia&gt; B3 = OffsetArray(A[<span class="hljs-number">2</span>:<span class="hljs-number">4</span>, <span class="hljs-number">1</span>:<span class="hljs-number">4</span>], <span class="hljs-number">2</span>:<span class="hljs-number">4</span>, <span class="hljs-number">1</span>:<span class="hljs-number">4</span>)
 <span class="hljs-comment"># wrap the snipped-out piece in an OffsetArray</span>
 OffsetArrays.OffsetArray{<span class="hljs-built_in">Int64</span>,<span class="hljs-number">2</span>,<span class="hljs-built_in">Array</span>{<span class="hljs-built_in">Int64</span>,<span class="hljs-number">2</span>}} with indices <span class="hljs-number">2</span>:<span class="hljs-number">4</span>×<span class="hljs-number">1</span>:<span class="hljs-number">4</span>:
  <span class="hljs-number">2</span>  <span class="hljs-number">7</span>  <span class="hljs-number">12</span>  <span class="hljs-number">17</span>
