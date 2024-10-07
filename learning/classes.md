@@ -52,6 +52,8 @@ If you know of other classes using Julia for teaching, please consider [updating
     * [EN560.630](https://github.com/cristophermoen/StructuralDynamics), Structural Dynamics (Prof. Cristopher D. Moen), Spring 2020, Fall 2021
 * Hadsel High School, Stokmarknes, Nordland, Norway
     * [AnsattOversikt](https://www.hadsel.vgs.no/AnsattOversikt.aspx?personid=16964&amp;mid1=15925), [REA3034] Programmering og modellering (Programming and modeling with Julia and Snap), 2018 / 19 (High school lecturer Olav A Marschall, M.sc. Computer Science)
+* Georgia Southern University
+    * Introduction to Scientific Computing (MENG-7890) (Dr. Hayri Sezer), Fall 2024
 * IIT Indore
     * [ApplNLA](https://github.com/ivanslapnicar/GIAN-Applied-NLA-Course), Modern Applications of Numerical Linear Algebra (Prof. [Ivan Slapnicar](http://marjan.fesb.hr/~slap/)), June 2016
 * Instituto Tecnológico Autónomo de México (ITAM), Mexico City, Mexico
